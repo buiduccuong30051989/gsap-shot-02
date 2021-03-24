@@ -28,7 +28,15 @@ gulp.task('styles', () => {
           includePaths: ['./node_modules'],
         })
       )
-      .pipe(postcss())
+      .pipe(
+        postcss().on(
+          'error',
+          function (err) {
+            console.log(err);
+            this.emit('end');
+          }
+        )
+      )
       .pipe(
         gulpif(
           production,
